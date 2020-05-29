@@ -3,7 +3,6 @@
 
 ChoiceEngine::ChoiceEngine(int choice_id)
 {
-	ChoiceEngine::ButtonID = 0;
 	
 	if (choice_id == ACTION)
 	{
@@ -12,7 +11,7 @@ ChoiceEngine::ChoiceEngine(int choice_id)
 	}
 	else if (choice_id == TYPE)
 	{
-		chooseType();
+		this->chooseType();
 	}
 	else if (choice_id == OTHER)
 	{
@@ -27,7 +26,19 @@ ChoiceEngine::~ChoiceEngine()
 	delete this;
 }
 
-//
+
+int ChoiceEngine::chooseType()
+{
+	enum PlayerType { WARRIOR, TANK, ROGUE };
+	const char** heroTypeNames = new const char*;
+	*heroTypeNames = "Adventurer";
+	*(++heroTypeNames) = "Knight";
+	*(++heroTypeNames) = "Rogue";
+	button linkedButtons = createLinkedButtons(3, heroTypeNames);
+
+	return select(&linkedButtons);
+}
+
 int ChoiceEngine::select(button* choice)
 {
 	char input;
@@ -47,76 +58,41 @@ int ChoiceEngine::select(button* choice)
 		}
 	}
 }
-//
-
-void ChoiceEngine::changeButtonIDup()
-{
-	if ((ButtonID + 1) > choiseAmount) {
-		ButtonID = 0;
-	}
-	else {
-		ButtonID = ButtonID + 1;
-	}
-}
-
-void ChoiceEngine::changeButtonIDdown()
-{
-	if ((ButtonID - 1) < 0) {
-		ButtonID = choiseAmount;
-	}
-	else {
-		ButtonID = ButtonID - 1;
-	}
-}
 
 
-int ChoiceEngine::getButtonID()
-{
-	return ButtonID;
-}
 
 //TEST THIS
-button* ChoiceEngine::createLinkedButtons(int numButtons, const char** names)
+button ChoiceEngine::createLinkedButtons(int numButtons, const char** names)
 {
-	if (numButtons > 1) {
-		button start, * top;
-		/*start = new button;
-		start->id = 0;
-		start->name = names[0];
-		start->next = start;
-		start->prev = start;
-		*/
+	if (numButtons > 0) {
+		button start, * crawler;
 		start.id = 0;
 		start.name = names[0];
+
 		start.next = &start;
 		start.prev = &start;
-		top = &start;
-		for (int i = 1; i < numButtons; i++) {
-			button new_btn;// create new button
-			new_btn.id = i;
-			new_btn.name = names[i];
-			new_btn.next = &start; // loop forward to the start
-			new_btn.prev = top; // go to previous top
-			start.prev = &new_btn; // loop from the start back
-			top = &new_btn; // change current pointer to the latest addition
-		}
+		crawler = &start;
 
-		return &start;
+		for (int i = 1; i < numButtons; i++) {
+			button btnNew;
+			btnNew.id = i;
+			btnNew.name = names[i];
+			
+			btnNew.prev = crawler;
+			crawler->next = &btnNew;
+			crawler = &btnNew;
+		}
+		crawler->next = &start;
+		start.prev = crawler;
+
+		return start;
 	}
 	else {
 		std::cout << "Incorrect choice\n";
-		return nullptr;
+		button btnOK;
+		btnOK.name = "OK";
+		return btnOK;
 	}
 }
 
-int ChoiceEngine::chooseType()
-{
-	enum PlayerType { WARRIOR, TANK, ROGUE };
-	const char** heroTypeNames = new const char*;
-	heroTypeNames[0] = "Adventurer";
-	heroTypeNames[1] = "Knight";
-	heroTypeNames[2] = "Rogue";
-	button* linkedButtons = createLinkedButtons(3, heroTypeNames);
 
-	return select(linkedButtons);
-}
