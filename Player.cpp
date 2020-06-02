@@ -4,7 +4,7 @@
 
 Player::Player()
 {	
-	//const char* name;
+
 	char* tmp_name = new char;
 	std::cout << "What is thy name, Traveller?" << "\n";
 	std::cin >> tmp_name;
