@@ -29,13 +29,13 @@ int ChoiceEngine::chooseType()
 	enum PlayerType { WARRIOR, TANK, ROGUE };
 	const char* heroTypeNames[3] = { "Adventurer" , "Knight", "Rogue" };
 
-	Button* linkedButtons = new Button();
-	linkedButtons->makeListButtons(3, heroTypeNames);
+	ButtonList* linkedButtons = new ButtonList();
+	button* typeMenu = linkedButtons->makeButtonList(3, heroTypeNames);
 
-	return select(linkedButtons);
+	return select(typeMenu);
 }
 
-int ChoiceEngine::select(Button* choice)
+int ChoiceEngine::select(button* choice)
 {
 	char input;
 	while (1) {
@@ -50,7 +50,7 @@ int ChoiceEngine::select(Button* choice)
 		}
 		else if (input == '3')
 		{
-			return choice->getID();
+			return choice->id;
 		}
 	}
 }

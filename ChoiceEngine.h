@@ -19,7 +19,7 @@ class ChoiceEngine
 public:
 	ChoiceEngine(int );
 
-	int select(Button* );
+	int select(button* );
 	int select();
 	void visualise();
 	void chooseAction();

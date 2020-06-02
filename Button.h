@@ -1,14 +1,19 @@
 #pragma once
-class Button
-{
+
+struct button {
 	int id;
 	const char* name;
-public:
-	Button* next;
-	Button* prev;
+	button* next;
+	button* prev;
+};
 
-	Button();
-	Button* makeListButtons(int , const char**);
+class ButtonList
+{
+	button* head;
+	
+public:
+	ButtonList();
+	button* makeButtonList(int , const char**);
 	int getID();
 	void setBTNname();
 

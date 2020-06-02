@@ -1,48 +1,31 @@
 #include "Button.h"
 
-Button::Button()
+ButtonList::ButtonList()
 {
-	id = 0;
-	next = nullptr;
-	prev = nullptr;
-	name = "";
+	head = new button;
+	head->id = 0;
+	head->next = head->prev = head;
 }
 
-Button* Button::makeListButtons(int numButtons, const char** names)
+button* ButtonList::makeButtonList(int numButtons, const char** names)
 {
-	if (numButtons > 0) {
-		Button* start, * crawler;
-		start = new Button();
-		start->id = 0;
-		start->name = names[0];
+	button* crawler;
+	crawler = head;
+	crawler->name = names[0];
 
-		start->next = start;
-		start->prev = start;
-		crawler = start;
+	for (int i = 0; i < numButtons; i++)
+	{
+		button* link = new button();
+		link->id = i;
+		link->name = names[i];
 
-		for (int i = 1; i < numButtons; i++) {
-			Button* btnNew = new Button();
-			btnNew->id = i;
-			btnNew->name = names[i];
+		link->prev = crawler;
+		crawler->next = link;
 
-			btnNew->prev = crawler;
-			crawler->next = btnNew;
-
-			crawler = btnNew;
-		}
-		crawler->next = start;
-		start->prev = crawler;
-
-		return start;
+		crawler = link;
 	}
-	else {
-		Button* btnOK = new Button();
-		btnOK->name = "OK";
-		return btnOK;
-	}
-}
+	crawler->next = head;
+	head->prev = crawler;
 
-int Button::getID()
-{
-	return this->id;
+	return head;
 }

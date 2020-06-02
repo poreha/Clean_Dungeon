@@ -30,7 +30,6 @@ public:
 
 class Player : public Unit
 {
-	char* pl_name;
 
 	enum PlayerType { WARRIOR, TANK, ROGUE };
 

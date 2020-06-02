@@ -3,13 +3,14 @@
 #include <iostream>
 
 Player::Player()
-{	
-
+{
+	Unit Unit;
 	char* tmp_name = new char;
 	std::cout << "What is thy name, Traveller?" << "\n";
 	std::cin >> tmp_name;
 	const char* name = static_cast<const char*>(tmp_name);
 	this->setName(name);
+
 	std::cout << "Choose your class:";
 	ChoiceEngine HeroTypeChoice(TYPE);
 	this->setTypeStats(HeroTypeChoice.chooseType());
