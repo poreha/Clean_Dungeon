@@ -31,7 +31,7 @@ public:
 class Player : public Unit
 {
 
-	enum PlayerType { WARRIOR, TANK, ROGUE };
+	enum PlayerType { ADVENTURER, KNIGHT, ROGUE };
 
 	void setTypeStats(Unit* , int );
 	void setTypeStats(int );
