@@ -2,7 +2,7 @@
 
 ButtonList::ButtonList()
 {
-	head = new button;
+	head = new button();
 	head->id = 0;
 	head->next = head->prev = head;
 }
@@ -13,7 +13,7 @@ button* ButtonList::makeButtonList(int numButtons, const char** names)
 	crawler = head;
 	crawler->name = names[0];
 
-	for (int i = 0; i < numButtons; i++)
+	for (int i = 1; i < numButtons; i++)
 	{
 		button* link = new button();
 		link->id = i;

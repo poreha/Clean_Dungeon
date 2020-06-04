@@ -1,58 +1,69 @@
 #include "ChoiceEngine.h"
 #include <iostream>
+#include <Windows.h>
+#include <conio.h>
 
 ChoiceEngine::ChoiceEngine(int choice_id)
 {
-	
-	if (choice_id == ACTION)
+	answer = 0;
+	button* menu = decide(choice_id);
+
+	//visualise(int,char*)
+
+	answer = select(menu);
+
+}
+
+button* ChoiceEngine::decide(int id)
+{
+	button* tmp_menu = new button();
+	if (id == ACTION)
 	{
 		//chooseAction()
-		
+
 	}
-	else if (choice_id == TYPE)
+	else if (id == TYPE)
 	{
-		this->chooseType();
+		tmp_menu = chooseType();
 	}
-	else if (choice_id == OTHER)
+	else if (id == OTHER)
 	{
 		//etc.
 	}
-	//visualise(int,char*)
-	//select(int)
 
+	return tmp_menu;
 }
 
-
-
-int ChoiceEngine::chooseType()
+button* ChoiceEngine::chooseType()
 {
-	enum PlayerType { WARRIOR, TANK, ROGUE };
-	const char* heroTypeNames[3] = { "Adventurer" , "Knight", "Rogue" };
+	const char* heroTypes[3] = { "Adventurer" , "Knight", "Rogue" };
 
 	ButtonList* linkedButtons = new ButtonList();
-	button* typeMenu = linkedButtons->makeButtonList(3, heroTypeNames);
+	button* typeMenu = linkedButtons->makeButtonList(3, heroTypes);
 
-	return select(typeMenu);
+	return typeMenu;
 }
+
 
 int ChoiceEngine::select(button* choice)
 {
 	char input;
 	while (1) {
-		std::cin >> input;
-		if (input == '1')//understand how to work with virt keyboards
-		{
-			choice = choice->next;
+		input = _getch();
+		if (input != 0x0D) {
+			if (GetKeyState(VK_DOWN)) {
+				std::cout << choice->next->name << " is next ";
+				choice = choice->next;
+			}
+			else if (GetKeyState(VK_UP)) {
+				std::cout << choice->prev->name << " is prev: ";
+				choice = choice->prev;
+			}
+			
 		}
-		else if (input == '2')
-		{
-			choice = choice->prev;
-		}
-		else if (input == '3')
-		{
-			return choice->id;
-		}
+		else break;
 	}
+	std::cout << choice->id;
+	return choice->id;
 }
-
 

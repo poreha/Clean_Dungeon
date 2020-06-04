@@ -1,5 +1,5 @@
 #pragma once
-#include <string> 
+
 #include "Button.h"
 /*
 	upon creation
@@ -15,14 +15,19 @@ enum Choice { ACTION, TYPE, OTHER };
 
 class ChoiceEngine
 {
-
+	
+	button* menu;
+	button* decide(int);
 public:
+	int answer;
+
 	ChoiceEngine(int );
 
 	int select(button* );
-	int select();
+
 	void visualise();
 	void chooseAction();
-	int chooseType();
+	button* chooseType();
+
 };
 
