@@ -17,7 +17,7 @@ class ChoiceEngine
 {
 	
 	button* menu;
-	button* decide(int);
+	button* makeMenu(int);
 public:
 	int answer;
 
@@ -26,7 +26,7 @@ public:
 	int select(button* );
 
 	void visualise();
-	void chooseAction();
+	button* chooseAction();
 	button* chooseType();
 
 };

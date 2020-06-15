@@ -29,3 +29,16 @@ button* ButtonList::makeButtonList(int numButtons, const char** names)
 
 	return head;
 }
+
+ButtonList::~ButtonList()
+{
+	button* crawler;
+	crawler = head;
+	while (crawler->next != nullptr) {
+		crawler->id = 0;
+		crawler->name = "";
+		crawler->prev = nullptr;
+		crawler = crawler->next;
+		crawler->prev->next = nullptr;
+	}
+}

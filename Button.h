@@ -13,9 +13,7 @@ class ButtonList
 	
 public:
 	ButtonList();
+	~ButtonList();
 	button* makeButtonList(int , const char**);
-	int getID();
-	void setBTNname();
-
 };
 
