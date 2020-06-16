@@ -4,7 +4,25 @@
 DungeonMaster::DungeonMaster(int level)
 {
 	DungeonMaster::dungeonLevel = level;
-	startingRoom.setNext(&finalRoom);
+	startingRoom->setNext(finalRoom);
+}
+
+Room* DungeonMaster::createLinkedRooms(int numRooms)
+{
+	Room* crawler;
+	startingRoom->setPopulation(false);
+	finalRoom->setPopulation(false);
+
+	crawler = startingRoom;
+
+	for (int i = 1; i < numRooms; i++)
+	{
+		Room* link = createRoom();
+		crawler->setNext(link);
+		crawler = link;
+	}
+	crawler->setNext(finalRoom);
+	return startingRoom;
 }
 
 Room* DungeonMaster::createRoom()
@@ -22,20 +40,6 @@ Room* DungeonMaster::createRoom()
 	return newRoom;
 }
 
-Room* DungeonMaster::createLinkedRooms(int numRooms)
-{
-	Room* dungeon = new Room;
-	startingRoom.setPopulation(false);
-	finalRoom.setPopulation(false);
-	dungeon[0] = startingRoom;
-	for (int i = 1; i < numRooms; i++) {
-		dungeon[i] = *createRoom();
-		dungeon[i - 1].setNext(&dungeon[i]);
-	}
-	dungeon[numRooms].setNext(&finalRoom);
-	
-	return dungeon;
-}
 
 void DungeonMaster::populate(Room* tempRoom, Monster tempMonster)
 {

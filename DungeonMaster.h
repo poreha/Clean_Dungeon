@@ -14,12 +14,14 @@
 	method .pass 
 		checks if player has passed the room
 */
+
 #include "Room.h"
 
 class DungeonMaster
 {
 	int dungeonLevel;
-	Room startingRoom, finalRoom;
+	Room* startingRoom;
+	Room* finalRoom;
 public:
 	DungeonMaster(int );
 	Room* createRoom();

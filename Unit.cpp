@@ -5,6 +5,9 @@ Unit::Unit()
 	unit_hp = 0;
 	unit_def = 0;
 	unit_dex = 0.0;
+	unit_atc = 0;
+
+	unit_name = "Nameless";
 }
 
 void Unit::setName(const char* new_name)
@@ -30,7 +33,7 @@ void Unit::setDEX(double dexterity) {
 
 const char* Unit::getNAME()
 {
-	return unit_name;
+	return Unit::unit_name;
 }
 
 int Unit::getHP(){
